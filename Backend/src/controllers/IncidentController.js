@@ -15,9 +15,38 @@ class IncidentsController {
   }
 
   async index(req, res) {
-    const incidents = await Conection('incidents').select('*');
+    const { page = 1 } = req.query;
+
+    const [count] = await Conection('incidents').count();
+
+    const incidents = await Conection('incidents')
+      .limit(5)
+      .offset((page - 1) * 5)
+      .select('*');
+
+    res.header('X-Total-Count', count['count(*)']);
 
     return res.json(incidents);
+  }
+
+  async delete(req, res) {
+    const { id } = req.params;
+    const ong_id = req.headers.authorization;
+
+    const incident = await Conection('incidents')
+      .where('id', id)
+      .select('ong_id')
+      .first();
+
+    if (incident.ong_id !== ong_id) {
+      return res.status(401).json({ error: 'Operation not permitted.' });
+    }
+
+    await Conection('incidents')
+      .where('id', id)
+      .delete();
+
+    return res.status(204).send();
   }
 }
 export default new IncidentsController();
