@@ -1,10 +1,8 @@
 {
   "name": "semanomnistack11",
   "dependencies": {
- 
-  
-    
-    "express": "^4.17.1",   
+    "express": "^4.17.1",
+    "knex": "^0.20.13",
     "package.json": "^2.0.1",
     "pg": "^7.18.1",
     "pg-hstore": "^2.3.3",
@@ -12,11 +10,11 @@
     "yup": "^0.28.1"
   },
   "scripts": {
-    "dev": "nodemon src/server.js",   
+    "dev": "nodemon src/server.js",
     "dev:debug": "nodemon --inspect src/server.js"
   },
   "devDependencies": {
-    "acorn": "^7.1.1", 
+    "acorn": "^7.1.1",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-prettier": "^6.10.0",
